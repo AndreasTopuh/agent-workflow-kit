@@ -1,11 +1,11 @@
 # Agent Workflow Kit
 
 **Make any AI coding assistant work like a careful senior engineer.**  
-Drop-in rules, skills, and a reviewer subagent for Cursor, Antigravity, VS Code, Gemini CLI, Codex, Claude Code, and other AI coding tools that read `AGENTS.md` / `GEMINI.md`.
+Drop-in universal rules, skills, and a reviewer subagent for Cursor, Antigravity, VS Code, Gemini CLI, Codex, Claude Code, and other AI coding tools that read `AGENTS.md`.
 
 ---
 
-
+> [!IMPORTANT]
 > **Note for Beginners: This is NOT an Application You Run!**  
 > If you are new to AI coding tools:  
 > **You do NOT need to run commands like `npm start`, `python main.py`, or set up a server.**  
@@ -27,9 +27,9 @@ curl -fsSL https://raw.githubusercontent.com/AndreasTopuh/agent-workflow-kit/mai
 irm https://raw.githubusercontent.com/AndreasTopuh/agent-workflow-kit/main/install.ps1 | iex
 ```
 
-> **Interactive Menu:** The installer will ask you which scope you want:
-> 1. **Current Project (Full Kit):** Installs `AGENTS.md`, `GEMINI.md`, and `.agent/` (skills & reviewer).
-> 2. **Core Rules Only ("The Brain"):** Installs only `AGENTS.md` & `GEMINI.md` without extra skill folders.
+> **Interactive Menu:** The installer will prompt you to choose your desired setup scope:
+> 1. **Current Project (Full Kit):** Installs `AGENTS.md` and `.agent/` (skills & reviewer).
+> 2. **Core Rules Only ("The Brain"):** Installs only `AGENTS.md` without extra skill folders.
 > 3. **Global Setup (All Projects):** Installs to your machine's global folders (`~/.gemini`, `~/.codex`, `~/.claude`).
 >
 > *(You can also pass flags directly: `bash -s -- --project`, `--core`, or `--global`)*
@@ -42,9 +42,25 @@ Whether you use the 1-command installer, drag & drop, or manual copying, choose 
 
 | Option | What Gets Installed | Best For |
 |---|---|---|
-| **Option 1: Single Project (Full Kit)** *(Recommended)* | `AGENTS.md` + `GEMINI.md` + `.agent/` folder (rules, checklist, skills, reviewer) | **Maximum engineering quality.** Gives your AI the rules, specialized skills (browser proofing, root-cause debugging), and an automated reviewer subagent to catch bugs before commit. |
-| **Option 2: Core Rules Only ("The Brain")** | Just `AGENTS.md` (and `GEMINI.md`) | **Minimalist & lightweight.** If you don't want extra folders or your editor only reads a single rule file. Gives the AI the core disciplined thinking rules without the skill folders. |
+| **Option 1: Single Project (Full Kit)** *(Recommended)* | `AGENTS.md` + `.agent/` folder (rules, checklist, skills, reviewer) | **Maximum engineering quality.** Gives your AI the universal rules, specialized skills (browser proofing, root-cause debugging), and an automated reviewer subagent to catch bugs before commit. |
+| **Option 2: Core Rules Only ("The Brain")** | Just `AGENTS.md` | **Minimalist & lightweight.** If you don't want extra folders or your editor only reads a single rule file. Gives the AI the core disciplined thinking rules without the skill folders. |
 | **Option 3: Global / All Projects on Machine** | `~/.gemini/GEMINI.md`<br>`~/.codex/AGENTS.md`<br>`~/.claude/CLAUDE.md`<br>Cursor Settings | **Set once and forget.** Every project on your computer automatically inherits senior engineer discipline without needing to copy files into each repo. |
+
+---
+
+## 🔌 Tool Compatibility: How AI Editors Use `AGENTS.md`
+
+`AGENTS.md` is the universal, vendor-neutral standard for AI coding guidelines:
+
+| AI Assistant / Editor | How It Works | What You Do |
+|---|---|---|
+| **Cursor** | Automatically loads `AGENTS.md` from the project root | Works out of the box (or paste into *Cursor Settings* → *Rules*) |
+| **Antigravity** | Automatically reads `AGENTS.md` from the workspace | Works out of the box |
+| **OpenAI Codex / OpenHands** | Natively discovers `AGENTS.md` in root directory | Works out of the box |
+| **Claude Code** | Looks for `CLAUDE.md` | Run `cp AGENTS.md CLAUDE.md` (or use our installer) |
+| **Gemini CLI** | Looks for `GEMINI.md` or `AGENTS.md` | Run `cp AGENTS.md GEMINI.md` (or use our installer) |
+| **GitHub Copilot** | Reads custom repository instructions | Run `cp AGENTS.md .github/copilot-instructions.md` |
+| **Windsurf (Codeium)** | Reads custom rules file | Run `cp AGENTS.md .windsurfrules` |
 
 ---
 
@@ -61,7 +77,7 @@ If you don't want to touch the terminal at all, you can set this up in 3 simple 
 2. **Copy Based on Your Chosen Scope:**  
    - **For Single Project (Full Kit):** Drag `AGENTS.md` and the `.agent` folder directly into your project's root folder.
    - **For Core Rules Only ("The Brain"):** Drag only `AGENTS.md` into your project's root folder.
-   - **For Global Setup:** Copy `AGENTS.md` / `GEMINI.md` to your tool's global config location (see table below).
+   - **For Global Setup:** Copy `AGENTS.md` to your tool's global config location (see table below).
 3. **Start Coding with AI:**  
    Open your project in Cursor, Antigravity, VS Code, etc., and chat with the AI as you normally would. The AI reads the rules in the background automatically! 🎉
 
@@ -74,7 +90,7 @@ If you want to use standard `git` commands without our installer script:
 ### Mac & Linux
 ```bash
 git clone https://github.com/AndreasTopuh/agent-workflow-kit.git .awk-temp
-cp .awk-temp/AGENTS.md .awk-temp/GEMINI.md .
+cp .awk-temp/AGENTS.md .
 cp -r .awk-temp/.agent .   # Omit this line if you only want Core Rules ("The Brain")
 rm -rf .awk-temp
 ```
@@ -82,13 +98,13 @@ rm -rf .awk-temp
 ### Windows (PowerShell)
 ```powershell
 git clone https://github.com/AndreasTopuh/agent-workflow-kit.git .awk-temp
-Copy-Item .awk-temp\AGENTS.md, .awk-temp\GEMINI.md .
+Copy-Item .awk-temp\AGENTS.md .
 Copy-Item -Recurse .awk-temp\.agent .   # Omit this line if you only want Core Rules ("The Brain")
 Remove-Item -Recurse -Force .awk-temp
 ```
 
 > [!TIP]
-> **Already have an `AGENTS.md` or `GEMINI.md` in your project?**  
+> **Already have an `AGENTS.md` in your project?**  
 > Don't overwrite it! Paste this kit's contents at the very **top** of your existing file, and keep your custom project rules underneath.
 
 ---
@@ -111,8 +127,7 @@ This kit is designed to keep AI assistants disciplined. Here is what the technic
 ## 📂 What's Inside This Kit?
 
 ```
-AGENTS.md                         Always-on rules ("The Brain" - read by Cursor, Codex, Antigravity, VS Code, etc.)
-GEMINI.md                         Same rules for Antigravity / Gemini CLI
+AGENTS.md                         Universal rules ("The Brain" - read by Cursor, Codex, Antigravity, VS Code, etc.)
 .agent/
   rules/checklist.md              4 questions the AI must answer with evidence before saying "done"
   skills/

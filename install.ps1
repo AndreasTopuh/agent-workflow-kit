@@ -8,13 +8,13 @@ $RepoUrl = 'https://github.com/AndreasTopuh/agent-workflow-kit.git'
 $RawBase = 'https://raw.githubusercontent.com/AndreasTopuh/agent-workflow-kit/main'
 
 Write-Host "🤖 Agent Workflow Kit Installer" -ForegroundColor Cyan
-Write-Host "Make any AI coding agent work like a careful senior engineer.`n"
+Write-Host "Universal senior engineer rules and skills for AI coding agents.`n"
 
 if ([string]::IsNullOrWhiteSpace($Scope)) {
     if ([Environment]::UserInteractive) {
         Write-Host "Choose installation mode:"
-        Write-Host "  [1] Current Project: Full Kit (Rules + Skills + Reviewer) (Recommended)" -ForegroundColor Green
-        Write-Host "  [2] Current Project: Core Rules Only (`"The Brain`" - AGENTS.md & GEMINI.md)"
+        Write-Host "  [1] Current Project: Full Kit (AGENTS.md + .agent skills/reviewer) (Recommended)" -ForegroundColor Green
+        Write-Host "  [2] Current Project: Core Rules Only (`"The Brain`" - AGENTS.md only)"
         Write-Host "  [3] Global Setup:   All Projects on Machine (~/.gemini, ~/.codex, ~/.claude)"
         Write-Host ""
         $choice = Read-Host "Enter selection [1-3] (Default: 1)"
@@ -71,7 +71,6 @@ try {
         foreach ($f in $folders) { New-Item -ItemType Directory -Path $f -Force | Out-Null }
 
         Invoke-WebRequest -Uri "$RawBase/AGENTS.md" -OutFile "$TempDir\AGENTS.md"
-        Invoke-WebRequest -Uri "$RawBase/GEMINI.md" -OutFile "$TempDir\GEMINI.md"
         Invoke-WebRequest -Uri "$RawBase/.agent/rules/checklist.md" -OutFile "$TempDir\.agent\rules\checklist.md"
         Invoke-WebRequest -Uri "$RawBase/.agent/agents/reviewer.md" -OutFile "$TempDir\.agent\agents\reviewer.md"
         Invoke-WebRequest -Uri "$RawBase/.agent/skills/root-cause/SKILL.md" -OutFile "$TempDir\.agent\skills\root-cause\SKILL.md"
@@ -85,21 +84,23 @@ try {
         '1' {
             Write-Host "==> Installing Full Kit into current directory: $currentDir..." -ForegroundColor Cyan
             Backup-IfExists "$currentDir\AGENTS.md"
-            Backup-IfExists "$currentDir\GEMINI.md"
-            Copy-Item -Path "$TempDir\AGENTS.md", "$TempDir\GEMINI.md" -Destination $currentDir -Force
+            Copy-Item -Path "$TempDir\AGENTS.md" -Destination $currentDir -Force
             Copy-Item -Path "$TempDir\.agent" -Destination $currentDir -Recurse -Force
             Write-Host "`n✔ Successfully installed Full Kit in this project!" -ForegroundColor Green
-            Write-Host "Files added:`n  - AGENTS.md`n  - GEMINI.md`n  - .agent/ (checklist, reviewer, skills)"
-            Write-Host "`nNext step: Open your project in Cursor, Antigravity, or VS Code and chat with AI normally!"
+            Write-Host "Files added:`n  - AGENTS.md (Universal rules)`n  - .agent/ (Checklist, Reviewer subagent, Skills)"
+            Write-Host "`nCompatibility:"
+            Write-Host "  - Cursor, Antigravity, VS Code, Codex: Automatically active!"
+            Write-Host "  - Claude Code: Run 'Copy-Item AGENTS.md CLAUDE.md' if your version requires CLAUDE.md"
         }
         '2' {
             Write-Host "==> Installing Core Rules Only (`"The Brain`") into current directory: $currentDir..." -ForegroundColor Cyan
             Backup-IfExists "$currentDir\AGENTS.md"
-            Backup-IfExists "$currentDir\GEMINI.md"
-            Copy-Item -Path "$TempDir\AGENTS.md", "$TempDir\GEMINI.md" -Destination $currentDir -Force
+            Copy-Item -Path "$TempDir\AGENTS.md" -Destination $currentDir -Force
             Write-Host "`n✔ Successfully installed Core Rules in this project!" -ForegroundColor Green
-            Write-Host "Files added:`n  - AGENTS.md`n  - GEMINI.md"
-            Write-Host "`nNext step: Open your project in Cursor, Antigravity, or VS Code and chat with AI normally!"
+            Write-Host "Files added:`n  - AGENTS.md (Universal rules)"
+            Write-Host "`nCompatibility:"
+            Write-Host "  - Cursor, Antigravity, VS Code, Codex: Automatically active!"
+            Write-Host "  - Claude Code: Run 'Copy-Item AGENTS.md CLAUDE.md' if your version requires CLAUDE.md"
         }
         '3' {
             Write-Host "==> Installing globally for all projects on this machine..." -ForegroundColor Cyan
@@ -112,7 +113,7 @@ try {
             New-Item -ItemType Directory -Path $geminiDir, $codexDir, $claudeDir -Force | Out-Null
 
             Backup-IfExists "$geminiDir\GEMINI.md"
-            Copy-Item -Path "$TempDir\GEMINI.md" -Destination "$geminiDir\GEMINI.md" -Force
+            Copy-Item -Path "$TempDir\AGENTS.md" -Destination "$geminiDir\GEMINI.md" -Force
             Write-Host "  - Installed to $geminiDir\GEMINI.md (Antigravity & Gemini CLI)"
 
             Backup-IfExists "$codexDir\AGENTS.md"
@@ -135,4 +136,3 @@ try {
 finally {
     Cleanup
 }
-

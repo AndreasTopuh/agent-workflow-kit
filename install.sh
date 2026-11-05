@@ -12,7 +12,7 @@ YELLOW="\033[33m"
 RESET="\033[0m"
 
 echo -e "${BOLD}🤖 Agent Workflow Kit Installer${RESET}"
-echo -e "Make any AI coding agent work like a careful senior engineer.\n"
+echo -e "Universal senior engineer rules and skills for AI coding agents.\n"
 
 CHOICE=""
 
@@ -32,8 +32,8 @@ for arg in "$@"; do
       echo "Usage: curl -fsSL .../install.sh | bash -s -- [OPTION]"
       echo ""
       echo "Options:"
-      echo "  --project, -p   Install full kit (rules + skills + reviewer) in current folder [Default]"
-      echo "  --core, -c      Install core rules only (AGENTS.md & GEMINI.md) in current folder"
+      echo "  --project, -p   Install full kit (AGENTS.md + .agent folder) in current folder [Default]"
+      echo "  --core, -c      Install core universal rules (AGENTS.md only) in current folder"
       echo "  --global, -g    Install globally across all projects (~/.gemini, ~/.codex, ~/.claude)"
       exit 0
       ;;
@@ -44,8 +44,8 @@ done
 if [ -z "$CHOICE" ]; then
   if [ -t 0 ] || [ -e /dev/tty ]; then
     echo "Choose installation mode:"
-    echo -e "  ${BOLD}[1]${RESET} Current Project: ${BOLD}Full Kit${RESET} (Rules + Skills + Reviewer) ${GREEN}(Recommended)${RESET}"
-    echo -e "  ${BOLD}[2]${RESET} Current Project: ${BOLD}Core Rules Only${RESET} (\"The Brain\" - AGENTS.md & GEMINI.md)"
+    echo -e "  ${BOLD}[1]${RESET} Current Project: ${BOLD}Full Kit${RESET} (AGENTS.md + .agent skills/reviewer) ${GREEN}(Recommended)${RESET}"
+    echo -e "  ${BOLD}[2]${RESET} Current Project: ${BOLD}Core Rules Only${RESET} (\"The Brain\" - AGENTS.md only)"
     echo -e "  ${BOLD}[3]${RESET} Global Setup:   ${BOLD}All Projects on Machine${RESET} (~/.gemini, ~/.codex, ~/.claude)"
     echo ""
     printf "Enter selection [1-3] (Default: 1): "
@@ -72,7 +72,6 @@ git clone --depth 1 --quiet "$REPO_URL" "$TEMP_DIR" 2>/dev/null || {
   echo -e "${YELLOW}Warning:${RESET} git clone failed, falling back to direct file download..."
   mkdir -p "$TEMP_DIR/.agent/rules" "$TEMP_DIR/.agent/agents" "$TEMP_DIR/.agent/skills/root-cause" "$TEMP_DIR/.agent/skills/prove-in-browser" "$TEMP_DIR/.agent/skills/ship"
   curl -fsSL "$RAW_BASE/AGENTS.md" -o "$TEMP_DIR/AGENTS.md"
-  curl -fsSL "$RAW_BASE/GEMINI.md" -o "$TEMP_DIR/GEMINI.md"
   curl -fsSL "$RAW_BASE/.agent/rules/checklist.md" -o "$TEMP_DIR/.agent/rules/checklist.md"
   curl -fsSL "$RAW_BASE/.agent/agents/reviewer.md" -o "$TEMP_DIR/.agent/agents/reviewer.md"
   curl -fsSL "$RAW_BASE/.agent/skills/root-cause/SKILL.md" -o "$TEMP_DIR/.agent/skills/root-cause/SKILL.md"
@@ -92,24 +91,24 @@ case "$CHOICE" in
   1)
     echo -e "${BLUE}==>${RESET} Installing Full Kit into current directory: $(pwd)..."
     backup_if_exists "AGENTS.md"
-    backup_if_exists "GEMINI.md"
     cp "$TEMP_DIR/AGENTS.md" .
-    cp "$TEMP_DIR/GEMINI.md" .
     cp -r "$TEMP_DIR/.agent" .
     echo -e "\n${GREEN}✔ Successfully installed Full Kit in this project!${RESET}"
-    echo -e "Files added:\n  - AGENTS.md\n  - GEMINI.md\n  - .agent/ (checklist, reviewer, skills)"
-    echo -e "\nNext step: Open your project in Cursor, Antigravity, or VS Code and chat with AI normally!"
+    echo -e "Files added:\n  - AGENTS.md (Universal rules)\n  - .agent/ (Checklist, Reviewer subagent, Skills)"
+    echo -e "\nCompatibility:"
+    echo -e "  - Cursor, Antigravity, VS Code, Codex: Automatically active!"
+    echo -e "  - Claude Code: Run 'cp AGENTS.md CLAUDE.md' if your version requires CLAUDE.md"
     ;;
 
   2)
     echo -e "${BLUE}==>${RESET} Installing Core Rules Only (\"The Brain\") into current directory: $(pwd)..."
     backup_if_exists "AGENTS.md"
-    backup_if_exists "GEMINI.md"
     cp "$TEMP_DIR/AGENTS.md" .
-    cp "$TEMP_DIR/GEMINI.md" .
     echo -e "\n${GREEN}✔ Successfully installed Core Rules in this project!${RESET}"
-    echo -e "Files added:\n  - AGENTS.md\n  - GEMINI.md"
-    echo -e "\nNext step: Open your project in Cursor, Antigravity, or VS Code and chat with AI normally!"
+    echo -e "Files added:\n  - AGENTS.md (Universal rules)"
+    echo -e "\nCompatibility:"
+    echo -e "  - Cursor, Antigravity, VS Code, Codex: Automatically active!"
+    echo -e "  - Claude Code: Run 'cp AGENTS.md CLAUDE.md' if your version requires CLAUDE.md"
     ;;
 
   3)
@@ -117,7 +116,7 @@ case "$CHOICE" in
     mkdir -p "$HOME/.gemini" "$HOME/.codex" "$HOME/.claude"
     
     backup_if_exists "$HOME/.gemini/GEMINI.md"
-    cp "$TEMP_DIR/GEMINI.md" "$HOME/.gemini/GEMINI.md"
+    cp "$TEMP_DIR/AGENTS.md" "$HOME/.gemini/GEMINI.md"
     echo "  - Installed to ~/.gemini/GEMINI.md (Antigravity & Gemini CLI)"
 
     backup_if_exists "$HOME/.codex/AGENTS.md"
@@ -137,4 +136,3 @@ case "$CHOICE" in
     exit 1
     ;;
 esac
-
