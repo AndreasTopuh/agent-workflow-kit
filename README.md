@@ -38,6 +38,14 @@ irm https://raw.githubusercontent.com/AndreasTopuh/agent-workflow-kit/main/insta
 >
 > *(You can also pass flags directly: `bash -s -- --project`, `--core`, or `--global`)*
 
+#### 👉 What to do right after running the command:
+1. Open your project folder in your AI editor (Cursor, Antigravity, VS Code, etc.).
+2. Open a **new chat** with your AI assistant and paste this quick test prompt:
+   ```text
+   List the rules, skills and subagents you can see in this workspace, and the 4 questions you must answer before saying "done". Don't change anything.
+   ```
+3. If the AI lists `root-cause`, `prove-in-browser`, `ship`, and `reviewer`, **it's ready!** From now on, you can chat normally or use our [Daily Prompts below](#-ready-to-use-daily-prompts).
+
 ---
 
 ## 🎯 3 Setup Scopes: Choose What You Want
