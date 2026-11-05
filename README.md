@@ -15,17 +15,21 @@ Drop-in universal rules, skills, and a reviewer subagent for Cursor, Antigravity
 
 ## ⚡ Method 1: 1-Command Install (Fastest, No Manual Copying!)
 
-Open your terminal in your project directory and run **just one command**:
+Open your terminal in your project directory and run the command for your operating system:
 
-### Mac & Linux
+#### 🍏 For macOS & 🐧 Linux (Terminal)
 ```bash
 curl -fsSL https://raw.githubusercontent.com/AndreasTopuh/agent-workflow-kit/main/install.sh | bash
 ```
 
-### Windows (PowerShell)
+#### 🪟 For Windows ONLY (PowerShell)
 ```powershell
 irm https://raw.githubusercontent.com/AndreasTopuh/agent-workflow-kit/main/install.ps1 | iex
 ```
+
+> [!NOTE]
+> **Saw `zsh: command not found: irm`?**  
+> That means you are on a **Mac** and accidentally copied the Windows command! Run the `curl` command above instead.
 
 > **Interactive Menu:** The installer will prompt you to choose your desired setup scope:
 > 1. **Current Project (Full Kit):** Installs `AGENTS.md` and `.agent/` (skills & reviewer).
@@ -87,7 +91,7 @@ If you don't want to touch the terminal at all, you can set this up in 3 simple 
 
 If you want to use standard `git` commands without our installer script:
 
-### Mac & Linux
+#### 🍏 For macOS & 🐧 Linux
 ```bash
 git clone https://github.com/AndreasTopuh/agent-workflow-kit.git .awk-temp
 cp .awk-temp/AGENTS.md .
@@ -95,7 +99,7 @@ cp -r .awk-temp/.agent .   # Omit this line if you only want Core Rules ("The Br
 rm -rf .awk-temp
 ```
 
-### Windows (PowerShell)
+#### 🪟 For Windows ONLY (PowerShell)
 ```powershell
 git clone https://github.com/AndreasTopuh/agent-workflow-kit.git .awk-temp
 Copy-Item .awk-temp\AGENTS.md .
