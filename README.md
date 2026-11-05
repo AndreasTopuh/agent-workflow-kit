@@ -221,9 +221,13 @@ Do not push.
 
 ---
 
-## 🧠 Optional: Stop AI Amnesia with `STATE.md`
+## 🧠 Highly Recommended: Keep a `STATE.md` in Your Own Projects
 
-AI chat sessions naturally lose memory when you open a new conversation. To give your AI assistant persistent long-term memory about your project, create a simple `STATE.md` in your project root:
+> [!TIP]
+> **Prevent AI Amnesia Across Conversations!**  
+> AI coding assistants have no memory between chat sessions. When you start a new conversation in your project, the AI won't remember past architectural decisions or what was completed yesterday.  
+> **We strongly recommend keeping a `STATE.md` file in the root of your project repositories.**  
+> `AGENTS.md` automatically instructs the AI to read your `STATE.md` before touching code and update it when finished.
 
 ```markdown
 # Project State & Memory
