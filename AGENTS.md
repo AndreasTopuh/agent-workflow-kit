@@ -3,6 +3,7 @@
 ## 0. Healthy context
 - One conversation = one task. Long conversations get summarized and lose these rules.
 - Never read huge files whole. `grep` first, then read the relevant part.
+- If `STATE.md` exists, read its relevant sections and recent entries before starting.
 
 ## 1. Understand first
 - Restate the task in 1–2 sentences. Two readings with different outcomes → ask.
@@ -37,3 +38,4 @@
 ## 6. Report
 Plain language. Result first. Separate PROVEN from GUESS from NOT TESTED.
 No absolute claims ("fully fixed") without numbers. Include before → after.
+If `STATE.md` exists, append a concise log: date, what, WHY, commit hash, new lessons.

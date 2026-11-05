@@ -221,6 +221,32 @@ Do not push.
 
 ---
 
+## 🧠 Optional: Stop AI Amnesia with `STATE.md`
+
+AI chat sessions naturally lose memory when you open a new conversation. To give your AI assistant persistent long-term memory about your project, create a simple `STATE.md` in your project root:
+
+```markdown
+# Project State & Memory
+
+## Overview
+- Project Name: <My App>
+- Tech Stack: <e.g. Next.js, FastAPI, PostgreSQL>
+
+## Current Status
+- What works: <Login, dashboard, database connection>
+- Current focus: <Adding payment integration>
+
+## Decisions & Pitfalls
+- Do NOT use library X because it causes memory leaks. Use Y instead.
+
+## Change Log
+- 2026-11-05: Added Stripe checkout | WHY: User subscription flow | Commit: abc1234
+```
+
+> **How it works:** `AGENTS.md` automatically instructs the AI to inspect `STATE.md` before starting any task, and append a brief entry when done. You never have to re-explain your whole codebase architecture every time you start a new chat!
+
+---
+
 ## 🛠️ Global Setup Details
 
 If you chose **Option 3 (Global Setup)**, here are the locations where the rules are stored:
